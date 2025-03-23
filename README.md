@@ -2,7 +2,6 @@
 
 
 
-TG_BOT_TOKEN   你的电报机器人的Token
 
 TG_CHAT_ID     你的Chat ID 
 
