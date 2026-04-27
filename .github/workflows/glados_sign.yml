@@ -1,53 +1,36 @@
-name: GLaDOS Sign-in Workflow
+# 文件路径：
+# .github/workflows/pingme.yml
+
+name: PingMe Auto Checkin
 
 on:
   schedule:
-    # 每天一次的定时任务（根据需要调整频率）
-    - cron: "10 16 * * *"  # 0 0 * * * 表示每天午夜执行
+    # 北京时间 08:30 / 20:30
+    # GitHub Actions 使用 UTC 时间，所以这里写 00:30 / 12:30 UTC
+   - cron: '30 15,16,4 * * *' 
   workflow_dispatch:
-    # 手动触发工作流
-    
-  # push:
-  #   branches:
-  #     - main  # 每次代码推送到 main 分支时也会触发
-
-  # push:
-  #  branches:
-  #    - main  # 只在主分支提交时触发
 
 jobs:
-  sign-in:
+  pingme:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.8"  # 你可以选择所需的 Python 版本
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt  # 安装依赖
+      - name: Install axios
+        run: npm install axios
 
-    - name: Set up environment variables
-      run: |
-        echo "TG_BOT_TOKEN=${{ secrets.TG_BOT_TOKEN }}" >> $GITHUB_ENV
-        echo "TG_CHAT_ID=${{ secrets.TG_CHAT_ID }}" >> $GITHUB_ENV
-        echo "HTTP_PROXY=${{ secrets.HTTP_PROXY }}" >> $GITHUB_ENV
-        echo "HTTPS_PROXY=${{ secrets.HTTPS_PROXY }}" >> $GITHUB_ENV
-        echo "GLADOS_EMAIL_1=${{ secrets.GLADOS_EMAIL_1 }}" >> $GITHUB_ENV
-        echo "GLADOS_COOKIE_1=${{ secrets.GLADOS_COOKIE_1 }}" >> $GITHUB_ENV
-        # 添加其他账号信息
-        echo "GLADOS_EMAIL_2=${{ secrets.GLADOS_EMAIL_2 }}" >> $GITHUB_ENV
-        echo "GLADOS_COOKIE_2=${{ secrets.GLADOS_COOKIE_2 }}" >> $GITHUB_ENV
+      - name: Run PingMe Script
+        env:
+          PINGME_DATA_2: ${{ secrets.PINGME_DATA_1 }}
 
-    - name: Run GLaDOS sign-in script
-      run: python glados.py  # 运行你的 Python 脚本
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_USER_ID: ${{ secrets.TG_USER_ID }}
 
-    - name: Clean up
-      run: |
-        rm -f glados_sign.py  # 可选：清理临时文件
+        run: node pingme.js
