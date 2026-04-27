@@ -1,7 +1,7 @@
 # 文件路径：
 # .github/workflows/pingme.yml
 
-name: PingMe Auto Checkin8
+name: PingMe Auto Checkin9
 
 on:
   schedule:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run PingMe Script
         env:
-          PINGME_DATA_2: ${{ secrets.PINGME_DATA_3 }}
+          PINGME_DATA_2: ${{ secrets.PINGME_DATA_4 }}
 
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
