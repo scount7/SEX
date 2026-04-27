@@ -1,7 +1,7 @@
 # 文件路径：
 # .github/workflows/pingme.yml
 
-name: PingMe Auto Checkin6
+name: PingMe Auto Checkin8
 
 on:
   schedule:
